@@ -1,0 +1,268 @@
+diff --git a/ciddeco.c b/ciddeco.c
+index 0d160a2..24bc11c 100644
+--- a/ciddeco.c
++++ b/ciddeco.c
+@@ -444,10 +444,12 @@ void capture_sample(void *ptr)
+                    } else
+                        break;
+                    sem_post(&mutex);
+-               }
++               } else
++                       usleep(100);
+            }
+            pcm_close(pcm);
+-       }
++       } else
++               usleep(100);
+     }
+ }
+ 
+@@ -460,7 +462,7 @@ int main(int argc, char *argv[])
+     int cid_signalling = 0;     // Type of CID signal. It can be either FSK or DTMF
+     unsigned int size_of_buf;
+ 
+-    int samp_rate = 44100;      // Default sampling rate
++    int samp_rate = 12000;      // Default sampling rate
+     int baud_rate = 1200;       // Default baud rate
+     int bits = 16;              // Default sample size
+ 
+@@ -680,6 +682,7 @@ int main(int argc, char *argv[])
+ #endif
+            sem_post(&mutex);
+        }
++       usleep(100);
+     }
+ 
+     sem_destroy(&mutex);
+
+
+diff --git a/fskmodem.c b/fskmodem.c
+index eee5706..482fa81 100644
+--- a/fskmodem.c
++++ b/fskmodem.c
+@@ -138,8 +138,9 @@ static inline int idemodulator(fsk_data * fskd, int *retval, int x)
+                                                 // Space is passed through a low pass
+                                                 // filter.
+ #ifdef VERBOSE
+-    fprintf(stderr, "IGET_SAMPLE: %8d, \tSpace: %8d, \tMark: %8d, \tIlin: %8d, \tID: %8d\n",
+-        x, is, im, ilin2, id);
++static int serno = 0;
++    fprintf(stderr, "%d IGET_SAMPLE: %8d, \tSpace: %8d, \tMark: %8d, \tIlin: %8d, \tID: %8d\n",
++        serno++, x, is, im, ilin2, id);
+ #endif
+ 
+ #ifdef DEBUG
+@@ -184,23 +185,23 @@ int fskmodem_init(fsk_data * fskd)
+        fskd->demod_filter.xv[i] = zeros[i];
+        fskd->demod_filter.yv[i] = zeros[i];
+        fskd->demod_filter.c_coef[i] = c_coef_6th_lp[i];
+-       fskd->demod_filter.d_coef[i] = d_coef_lp_1700hz[i];
+-       fskd->demod_filter.gain = gain_lp_1700hz;
++       fskd->demod_filter.d_coef[i] = d_coef_lp_1700hz_12[i];
++       fskd->demod_filter.gain = gain_lp_1700hz_12;
+ 
+        // Based on FSK standard used for CallerID, different coefficients 
+        // can be used form "filter_coefficient.h"
+        if (fskd->fsk_std == 0) {
+-           fskd->mark_filter.d_coef[i] = d_coef_1200hz[i];
+-           fskd->mark_filter.gain = gain_1200hz;
++           fskd->mark_filter.d_coef[i] = d_coef_1200hz_12[i];
++           fskd->mark_filter.gain = gain_1200hz_12;
+ 
+-           fskd->space_filter.d_coef[i] = d_coef_2200hz[i];
+-           fskd->space_filter.gain = gain_2200hz;
++           fskd->space_filter.d_coef[i] = d_coef_2200hz_12[i];
++           fskd->space_filter.gain = gain_2200hz_12;
+        } else {
+-           fskd->mark_filter.d_coef[i] = d_coef_1300hz[i];
+-           fskd->mark_filter.gain = gain_1300hz;
++           fskd->mark_filter.d_coef[i] = d_coef_1300hz_12[i];
++           fskd->mark_filter.gain = gain_1300hz_12;
+ 
+-           fskd->space_filter.d_coef[i] = d_coef_2100hz[i];
+-           fskd->space_filter.gain = gain_2100hz;
++           fskd->space_filter.d_coef[i] = d_coef_2100hz_12[i];
++           fskd->space_filter.gain = gain_2100hz_12;
+        }
+     }
+     return 0;
+
+
+gigijoe@gigijoe-Inspiron-3470:~/Workspace/FSK-CallerID-decoding$ sox audacity_files/CID-4_48X.wav -r 12000 audacity_files/CID-4_12X.wav
+
+gigijoe@gigijoe-Inspiron-3470:~/Workspace/FSK-CallerID-decoding$ ./cid_fsk ./audacity_files/CID-4_12X.wav  Wav File Information
+	Chunk size      : 82696
+	fmtchunkSize    : 16
+	AudioFormat     : 1
+	NumChannels     : 1
+	SampleRate      : 12000
+	ByteRate        : 24000
+	bps             : 16
+	DataChunkSize   : 82660
+Waiting for RING interrupt,...(press ctrl-C)
+^C
+Capturing CID message
+
+Searching for the start bit...
+Read 8192 bytes
+
+Searching for the start bit...
+
+Getting to the center of the bit...
+
+Entering channel seizure...
+
+
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1Read 8192 bytes
+	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	0	1	0	1	0	1	01	0	1	0	1	0	1	0	1	0	1	0	1	0	1
+	0	1	0	1	0	1	0	1	1
+
+Channel seizure detected with 308 alternate 1s and 0s.
+
+Detecting Mark signal... 
+
+	1	1	1	1	1	1	1	1	1	1	1	1	1	1	11	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+	1	1	1	1	1	1	1	1	1	1	1	1	1	1	11	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+	1	1	1	1	1	1	1	1	1	1	1	1	1	1	11	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+	1	1	1	1	1	1	1	1	1	1	1	1	1	1	11	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+	1	1	1	1	1	1	1	1	1	1	1	1	1	1	11	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+	1	1	1	1	1	1	1	1	1	1	1	1	1	1	11	1	1	1	1	1	1	1	1	1	1	1	1	0
+
+Mark signal detected with 178 consecutive 1s
+
+Getting Caller ID message data bytes...
+
+START				8 data bits			STOP
+	0	0	0	0	0	0	0	0	1	1	1		128
+
+		Message is MDMF
+
+	0	0	0	1	0	0	1	0	0	1	1		36
+
+		Length of CID message id 36
+
+	0	1	0	0	0	0	0	0	0	1	1		1
+
+		Data type is "Date & time"
+
+	0	0	0	0	1	0	0	0	0	1	1		8
+
+		Length of Data is 8
+
+	0	0	0	0	0	1	1	0	0	1	1		48
+
+	0	0	1	1	0	1	1	0	0	1	1		54
+
+	0	0	0	0	0	1	1	0	0	1	1		48
+
+	0	1	1	1	0	1	1	0	0	1	1		55
+
+	0	0	0	0	0	1	1	0	0	1	1		48
+
+	0	0	0	0	1	1	1	0	0	1	1		56
+
+	0	0	0	0	0	1	1	0	0	1	1		48
+
+Read 8192 bytes
+	0	1	0	0	1	1	1	0	0	1	1		57
+
+	0	0	1	0	0	0	0	0	0	1	1		2
+
+		Data type is "Phone Number"
+
+	0	0	1	0	1	0	0	0	0	1	1		10
+
+		Length of Data is 10
+
+	0	0	0	0	1	1	1	0	0	1	1		56
+
+	0	0	0	0	0	1	1	0	0	1	1		48
+
+	0	0	0	0	0	1	1	0	0	1	1		48
+
+	0	0	1	0	0	1	1	0	0	1	1		50
+
+	0	0	0	1	0	1	1	0	0	1	1		52
+
+	0	0	0	0	0	1	1	0	0	1	1		48
+
+	0	0	0	1	0	1	1	0	0	1	1		52
+
+	0	0	1	1	0	1	1	0	0	1	1		54
+
+	0	1	1	0	0	1	1	0	0	1	1		51
+
+	0	1	1	1	0	1	1	0	0	1	1		55
+
+	0	1	1	1	0	0	0	0	0	1	1		7
+
+		Data type is "Name" 
+
+	0	0	0	1	1	0	0	0	0	1	1		12
+
+		Length of Data is 12
+
+	0	1	1	0	0	0	0	1	0	1	1		67
+
+	0	1	0	0	0	0	1	1	0	1	1		97
+
+	0	0	0	1	1	0	1	1	0	1	1		108
+
+	0	0	0	1	1	0	1	1	0	1	1		108
+
+	0	1	0	1	0	0	1	1	0	1	1		101
+
+	0	0	1	0	0	1	1	1	0	1	1		114
+
+	0	1	0	0	1	0	0	1	0	1	1		73
+
+	0	0	0	1	0	0	0	1	0	1	1		68
+
+	0	0	1	1	1	0	1	0	0	1	1		46
+
+	0	1	1	0	0	0	1	1	0	1	1		99
+
+	0	1	1	1	1	0	1	1	0	1	1		111
+
+	0	1	0	1	1	0	1	1	0	1	1		109
+
+	0	1	1	1	0	0	0	1	0	1	1		71
+
+Checksum Passed!!
+
+CID Message is
+
+*****************************************************
+June 07 08 hr : 09 min 8002404637 CallerID.com
+*****************************************************
+
+Read 8192 bytes
+
+Searching for the start bit...
+Read 8192 bytes
+
+Searching for the start bit...
+Read 8192 bytes
+
+Searching for the start bit...
+Read 8192 bytes
+
+Searching for the start bit...
+Read 8192 bytes
+
+Searching for the start bit...
+Read 8192 bytes
+
+Searching for the start bit...
+Read 8192 bytes
+程式記憶體區段錯誤 (core dumped)
+

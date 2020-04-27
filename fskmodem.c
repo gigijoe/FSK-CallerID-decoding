@@ -138,8 +138,9 @@ static inline int idemodulator(fsk_data * fskd, int *retval, int x)
                                                 // Space is passed through a low pass
                                                 // filter.
 #ifdef VERBOSE
-    fprintf(stderr, "IGET_SAMPLE: %8d, \tSpace: %8d, \tMark: %8d, \tIlin: %8d, \tID: %8d\n",
-        x, is, im, ilin2, id);
+static int serno = 0;
+    fprintf(stderr, "%d IGET_SAMPLE: %8d, \tSpace: %8d, \tMark: %8d, \tIlin: %8d, \tID: %8d\n",
+        serno++, x, is, im, ilin2, id);
 #endif
 
 #ifdef DEBUG
@@ -184,23 +185,23 @@ int fskmodem_init(fsk_data * fskd)
 	fskd->demod_filter.xv[i] = zeros[i];
 	fskd->demod_filter.yv[i] = zeros[i];
 	fskd->demod_filter.c_coef[i] = c_coef_6th_lp[i];
-	fskd->demod_filter.d_coef[i] = d_coef_lp_1700hz[i];
-	fskd->demod_filter.gain = gain_lp_1700hz;
+	fskd->demod_filter.d_coef[i] = d_coef_lp_1700hz_12[i];
+	fskd->demod_filter.gain = gain_lp_1700hz_12;
 
 	// Based on FSK standard used for CallerID, different coefficients 
 	// can be used form "filter_coefficient.h"
 	if (fskd->fsk_std == 0) {
-	    fskd->mark_filter.d_coef[i] = d_coef_1200hz[i];
-	    fskd->mark_filter.gain = gain_1200hz;
+	    fskd->mark_filter.d_coef[i] = d_coef_1200hz_12[i];
+	    fskd->mark_filter.gain = gain_1200hz_12;
 
-	    fskd->space_filter.d_coef[i] = d_coef_2200hz[i];
-	    fskd->space_filter.gain = gain_2200hz;
+	    fskd->space_filter.d_coef[i] = d_coef_2200hz_12[i];
+	    fskd->space_filter.gain = gain_2200hz_12;
 	} else {
-	    fskd->mark_filter.d_coef[i] = d_coef_1300hz[i];
-	    fskd->mark_filter.gain = gain_1300hz;
+	    fskd->mark_filter.d_coef[i] = d_coef_1300hz_12[i];
+	    fskd->mark_filter.gain = gain_1300hz_12;
 
-	    fskd->space_filter.d_coef[i] = d_coef_2100hz[i];
-	    fskd->space_filter.gain = gain_2100hz;
+	    fskd->space_filter.d_coef[i] = d_coef_2100hz_12[i];
+	    fskd->space_filter.gain = gain_2100hz_12;
 	}
     }
     return 0;

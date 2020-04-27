@@ -252,11 +252,127 @@ static const double d_coef_lp_1700hz_48 [NZEROS_POLES + 1] = {-0.4222972557,
 2.8967245878, -8.3083998149, 12.7576882370, -11.0643521500, 5.1405555009, 1.0} ;
 
 
+/************************************************************************************************/
+/**************************************** 24000 Hz **********************************************/
+/************************************************************************************************/
+
+
+/*********************************  MARK BANDPASS  ********************************/
+
+/**@brief Coefficients for Mark filters for 1200Hz and 24 Khz sampling 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 24000
+ * @param corner1 864.911
+ * @param corner2 1664.911
+ */
+static const double gain_1200hz_24                      = 1.062338387e+03 ;
+static const double d_coef_1200hz_24 [NZEROS_POLES + 1] = {
+ -0.6572747021,
+  4.0112663417,
+-10.4266852309,
+ 14.7588556648,
+-11.9945952080,
+  5.3076643313,
+    1.0} ;
+
+
+/**@brief Coefficients for Mark filters for 1300Hz and 24 Khz sampling 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 24000
+ * @param corner1 960.147
+ * @param corner2 1760.147
+ */
+static const double gain_1300hz_24                      = 1.062340894e+03 ;
+static const double d_coef_1300hz_24 [NZEROS_POLES + 1] = {
+ -0.6572747021,
+  3.9756377692,
+-10.2820186612,
+ 14.5300247961,
+-11.8281276268,
+  5.2605209888,
+    1.0} ;
+
+
+/*********************************  SPACE BANDPASS  *******************************/
+
+/**@brief Coefficients for Space filters for 2100Hz and 24 Khz sampling Q fsctor 2.625
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 24000
+ * @param corner1 1737.756 
+ * @param corner2 2537.756
+ */
+static const double gain_2100hz_24                      = 1.062344869e+03 ;
+static const double d_coef_2100hz_24 [NZEROS_POLES + 1] = {
+ -0.6572747021,
+  3.5945838274,
+ -8.8155042240,
+ 12.2415102377,
+-10.1406119042,
+  4.7563145254,
+    1.0} ;
+
+
+/**@brief Coefficients for Space filters for 2200Hz and 24 Khz sampling 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 24000
+ * @param corner1 1820.506
+ * @param corner2 2658.601
+ */static const double gain_2200hz_24                      = 9.322781121e+02;
+static const double d_coef_2200hz_24 [NZEROS_POLES + 1] = {
+-0.6442189191,
+ 3.4756874203,
+-8.4822356328,
+11.7852181371,
+-9.8228466728,
+ 4.6611083979,
+    1.0} ;
+
+
+/**********************************  LOW PASS  ************************************/
+
+
+/**@brief Coefficients for Low Pass filter for 1700Hz and 48 Khz sampling 
+ *
+ * Since 1700 is center of both ranges 1200-2200 and 1300-2100 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Low Pass
+ * @param order 6
+ * @param sample_rate 24000
+ * @param corner1 1700
+ */
+static const double gain_lp_1700hz_24                   =  1.776345832e+04  ;
+static const double d_coef_lp_1700hz_24 [NZEROS_POLES + 1] = {
+-0.1758985916,
+ 1.3573977011,
+-4.4184975072,
+ 7.7786196065,
+-7.8282903649,
+ 4.2830662540,
+    1.0} ;
 
 /************************************************************************************************/
 /**************************************** 16000 Hz **********************************************/
 /************************************************************************************************/
 
+/* FSK decode fail ... */
 
 /*********************************  MARK BANDPASS  ********************************/
 
@@ -274,11 +390,20 @@ static const double gain_2100hz_16                      = 7.714586427e+03 ;
 static const double d_coef_2100hz_16 [NZEROS_POLES + 1] = {-0.8109608719, 
 	4.8463050158, -12.2624122920, 16.8034849110, -13.1498469240, 5.5730478395, 1.0} ;
 
-
-static const double gain_2200hz_16                      = 3.450423755e+02;
+/*
+static const double gain_2200hz_16                      = 3.450423755e+02 ;
 static const double d_coef_2200hz_16 [NZEROS_POLES + 1] = {-0.5320753683, 
 	2.2795472690, -5.2023382825, 7.1423622606, -6.4198613572, 3.4747465189, 1.0} ;
-
+*/
+static const double gain_2200hz_16                      = 3.039407281e+02 ;
+static const double d_coef_2200hz_16 [NZEROS_POLES + 1] = {
+-0.5161823940,
+ 2.2203755300,
+-5.0895081414,
+ 7.0212063475,
+-6.3443555818,
+ 3.4541106423,
+  1.0} ;
 
 /**********************************  LOW PASS  ************************************/
 
@@ -288,5 +413,237 @@ static const double d_coef_lp_1700hz_16 [NZEROS_POLES + 1] = {-0.0712022265,
 	0.6102683340, -2.2329558363, 4.4846591081, -5.2494746975, 3.4290109889, 1.0} ;
 
 
+/************************************************************************************************/
+/**************************************** 12000 Hz **********************************************/
+/************************************************************************************************/
 
+
+/*********************************  MARK BANDPASS  ********************************/
+
+/**@brief Coefficients for Mark filters for 1200Hz and 12 Khz sampling 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 12000
+ * @param corner1 864.911
+ * @param corner2 1664.911
+ */
+static const double gain_1200hz_12                      = 1.588060129e+02 ;
+static const double d_coef_1200hz_12 [NZEROS_POLES + 1] = {
+-0.4299088249,
+ 2.3683813621,
+-6.0374054470,
+ 8.9010609313,
+-8.0064981087,
+ 4.1661842552,
+    1.0} ;
+
+
+/**@brief Coefficients for Mark filters for 1300Hz and 12 Khz sampling 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 12000
+ * @param corner1 960.147
+ * @param corner2 1760.147
+ */
+static const double gain_1300hz_12                      = 1.588062303e+02 ;
+static const double d_coef_1300hz_12 [NZEROS_POLES + 1] = {
+-0.4299088248,
+ 2.2733801259,
+-5.6923301282,
+ 8.3366012926,
+-7.5474791074,
+ 3.9990690007,
+    1.0} ;
+
+
+/*********************************  SPACE BANDPASS  *******************************/
+
+/**@brief Coefficients for Space filters for 2100Hz and 12 Khz sampling Q fsctor 2.625
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 12000
+ * @param corner1 1737.756 
+ * @param corner2 2537.756
+ */
+static const double gain_2100hz_12                      = 1.588064875e+02 ;
+static const double d_coef_2100hz_12 [NZEROS_POLES + 1] = {
+-0.4299088248,
+ 1.3103332769,
+-2.9915918119,
+ 3.8693867290,
+-3.9549584675,
+ 2.3049876827,
+    1.0} ;
+
+
+/**@brief Coefficients for Space filters for 2200Hz and 12 Khz sampling 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 12000
+ * @param corner1 1820.506
+ * @param corner2 2658.601
+ */static const double gain_2200hz_12                      = 1.403567646e+02;
+static const double d_coef_2200hz_12 [NZEROS_POLES + 1] = {
+-0.4126832831,
+ 1.1267441664,
+-2.6340218792,
+ 3.2832400848,
+-3.5260877253,
+ 2.0373598521,
+    1.0} ;
+
+
+/**********************************  LOW PASS  ************************************/
+
+
+/**@brief Coefficients for Low Pass filter for 1700Hz and 12 Khz sampling 
+ *
+ * Since 1700 is center of both ranges 1200-2200 and 1300-2100 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Low Pass
+ * @param order 6
+ * @param sample_rate 12000
+ * @param corner1 1700
+ */
+static const double gain_lp_1700hz_12                   =  5.117871377e+02  ;
+static const double d_coef_lp_1700hz_12 [NZEROS_POLES + 1] = {
+-0.0275377378,
+ 0.2593387339,
+-1.0581216735,
+ 2.4089098631,
+-3.2867379599,
+ 2.5790967842,
+    1.0} ;
+
+
+/************************************************************************************************/
+/**************************************** 8000 Hz **********************************************/
+/************************************************************************************************/
+
+/* FSK decode fail ... */
+
+/*********************************  MARK BANDPASS  ********************************/
+
+/**@brief Coefficients for Mark filters for 1200Hz and 8 Khz sampling 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 8000
+ * @param corner1 864.911
+ * @param corner2 1664.911
+ */
+static const double gain_1200hz_8                      = 5.525184257e+01 ;
+static const double d_coef_1200hz_8 [NZEROS_POLES + 1] = {
+-0.2780599176,
+ 1.1575634693,
+-2.8164295167,
+ 4.1755819526,
+-4.2969514653,
+ 2.7317060672,
+    1.0} ;
+
+
+/**@brief Coefficients for Mark filters for 1300Hz and 8 Khz sampling 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 8000
+ * @param corner1 960.147
+ * @param corner2 1760.147
+ */
+static const double gain_1300hz_8                      = 5.525186386e+01 ;
+static const double d_coef_1300hz_8 [NZEROS_POLES + 1] = {
+-0.2780599176,
+ 1.0215252617,
+-2.4550404844,
+ 3.5291102371,
+-3.7357081520,
+ 2.4106727875,
+    1.0} ;
+
+
+/*********************************  SPACE BANDPASS  *******************************/
+
+/**@brief Coefficients for Space filters for 2100Hz and 8 Khz sampling Q fsctor 2.625
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 8000
+ * @param corner1 1737.756 
+ * @param corner2 2537.756
+ */
+static const double gain_2100hz_8                      = 5.525187587e+01 ;
+static const double d_coef_2100hz_8 [NZEROS_POLES + 1] = {
+-0.2780599176,
+-0.2290171862,
+-1.2468336550,
+-0.6744560554,
+-1.8593423981,
+-0.5404521253,
+    1.0} ;
+
+
+/**@brief Coefficients for Space filters for 2200Hz and 8 Khz sampling 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Bandpass
+ * @param order 3
+ * @param sample_rate 8000
+ * @param corner1 1820.506
+ * @param corner2 2658.601
+ */static const double gain_2200hz_8                      = 4.910096594e+01;
+static const double d_coef_2200hz_8 [NZEROS_POLES + 1] = {
+-0.2608995292,
+-0.3772883661,
+-1.3112860058,
+-1.1496962414,
+-1.9965797700,
+-0.9294040584,
+    1.0} ;
+
+
+/**********************************  LOW PASS  ************************************/
+
+
+/**@brief Coefficients for Low Pass filter for 1700Hz and 8 Khz sampling 
+ *
+ * Since 1700 is center of both ranges 1200-2200 and 1300-2100 
+ *
+ * Filter Design parameters 
+ * @param filtertype Butterworth
+ * @param passtype Low Pass
+ * @param order 6
+ * @param sample_rate 12000
+ * @param corner1 1700
+ */
+static const double gain_lp_1700hz_8                   =  7.275156035e+01  ;
+static const double d_coef_lp_1700hz_8 [NZEROS_POLES + 1] = {
+-0.0034681988,
+ 0.0339956940,
+-0.1949053270,
+ 0.4681867822,
+-1.0739546444,
+ 0.8904394762,
+    1.0} ;
 #endif

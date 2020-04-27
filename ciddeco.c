@@ -444,10 +444,12 @@ void capture_sample(void *ptr)
 		    } else
 			break;
 		    sem_post(&mutex);
-		}
+		} else
+			usleep(100);
 	    }
 	    pcm_close(pcm);
-	}
+	} else
+		usleep(100);
     }
 }
 
@@ -460,7 +462,7 @@ int main(int argc, char *argv[])
     int cid_signalling = 0;     // Type of CID signal. It can be either FSK or DTMF
     unsigned int size_of_buf;
 
-    int samp_rate = 44100;      // Default sampling rate
+    int samp_rate = 12000;      // Default sampling rate
     int baud_rate = 1200;       // Default baud rate
     int bits = 16;              // Default sample size
 
@@ -680,6 +682,7 @@ int main(int argc, char *argv[])
 #endif
 	    sem_post(&mutex);
 	}
+	usleep(100);
     }
 
     sem_destroy(&mutex);

@@ -1,5 +1,5 @@
 CC              = gcc
-CFLAGS          = -DVERBOSE #-Wall -Wextra\
+#CFLAGS          = -DVERBOSE #-Wall -Wextra\
                 -pedantic -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wstrict-prototypes \
                 -Waggregate-return -Wcast-qual -Wswitch-default -Wunreachable-code -Wformat=2\
 
