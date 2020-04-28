@@ -21,9 +21,11 @@ Folder Structure
   
 # Compile and run
 
-$ make wavfile
-$ sox audacity_files/CID-4_48X.wav -r 12000 audacity_files/CID-4_12X.wav
-$ ./cid_fsk ./audacity_files/CID-4_12X.wav
+ $ make wavfile
+
+ $ sox audacity_files/CID-4_48X.wav -r 12000 audacity_files/CID-4_12X.wav
+
+ $ ./cid_fsk ./audacity_files/CID-4_12X.wav
 	Press ctrl-c
 
 
