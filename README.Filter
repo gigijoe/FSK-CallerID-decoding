@@ -1,0 +1,34 @@
+#
+# http://www.sengpielaudio.com/calculator-cutoffFrequencies.htm
+#
+
+Q factor is 2.625
+
+#
+# https://www-users.cs.york.ac.uk/~fisher/mkfilter/trad.html
+#
+
+# Bandpass filter
+
+filtertype	=	Butterworth
+passtype	=	Bandpass
+ripple		=	-3
+order		=	3
+samplerate	=	48000
+corner1		=	1820.506
+corner2		=	2658.601
+adzero		=	
+logmin		=	
+
+# Lowpass filter
+
+filtertype	=	Butterworth
+passtype	=	Lowpass
+ripple		=	-3
+order		=	6
+samplerate	=	48000
+corner1		=	1700
+corner2		=	
+adzero		=	
+logmin		=	
+
